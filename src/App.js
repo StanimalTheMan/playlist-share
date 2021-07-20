@@ -8,12 +8,12 @@ import songReducer from "./reducer";
 
 export const SongContext = React.createContext({
   song: {
-    id: "b3272234-22ae-4f25-a918-bf8699763d99",
-    title: "This Is Amazing Grace (Official Music Video)",
-    artist: "Phil Wickham - T",
-    thumbnail: "http://img.youtube.com/vi/XFRjr_x-yxU/0.jpg",
-    url: "https://www.youtube.com/watch?v=XFRjr_x-yxU&list=RDXFRjr_x-yxU&start_radio=1",
-    duration: 279,
+    id: "641b3969-f86d-4013-b9c3-6bb8512cc4c4",
+    title: "Battle Belongs",
+    artist: "Phil Wickham",
+    thumbnail: "http://img.youtube.com/vi/qtvQNzPHn-w/0.jpg",
+    url: "https://www.youtube.com/watch?v=qtvQNzPHn-w",
+    duration: 286,
   },
   isPlaying: false,
 });
@@ -23,6 +23,12 @@ function App() {
   const [state, dispatch] = React.useReducer(songReducer, initialSongState);
   const greaterThanSm = useMediaQuery((theme) => theme.breakpoints.up("sm"));
   const greaterThanMd = useMediaQuery((theme) => theme.breakpoints.up("md"));
+  // const { data } = useQuery(GET_QUEUED_SONGS);
+  // console.log(data.queue);
+  // useEffect(() => {
+  //   console.log(data.queue[0]);
+  //   dispatch({ type: "SET_SONG", payload: { song: data.queue[0] } });
+  // }, [dispatch, data.queue]);
 
   return (
     <SongContext.Provider value={{ state, dispatch }}>
