@@ -10,15 +10,17 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import { PlayArrow, Save } from "@material-ui/icons";
+import { useSubscription } from "@apollo/client";
+import { GET_SONGS } from "../graphql/subscriptions";
 
 function SongList() {
-  let loading = false;
+  const { data, loading, error } = useSubscription(GET_SONGS);
 
-  const song = {
-    title: "I Remember You",
-    artist: "Dear Cloud",
-    thumbnail: "https://i.ytimg.com/vi/ahjnQmBWLdk/maxresdefault.jpg",
-  };
+  // const song = {
+  //   title: "I Remember You",
+  //   artist: "Dear Cloud",
+  //   thumbnail: "https://i.ytimg.com/vi/ahjnQmBWLdk/maxresdefault.jpg",
+  // };
 
   if (loading) {
     return (
@@ -34,11 +36,12 @@ function SongList() {
       </div>
     );
   }
+  if (error) return <div>Error fetching songs</div>;
 
   return (
     <div>
-      {Array.from({ length: 10 }, () => song).map((song, i) => (
-        <Song key={i} song={song} />
+      {data.songs.map((song) => (
+        <Song key={song.id} song={song} />
       ))}
     </div>
   );
@@ -74,7 +77,7 @@ function Song({ song }) {
         <CardMedia image={thumbnail} className={classes.thumbnail} />
         <div className={classes.songInfo}>
           <CardContent>
-            <Typography gutterButton variant="h5" component="h2">
+            <Typography gutterBottom variant="h5" component="h2">
               {title}
             </Typography>
             <Typography variant="body1" component="p" color="textSecondary">
