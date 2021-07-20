@@ -77,7 +77,7 @@ function Song({ song }) {
       localStorage.setItem("queue", JSON.stringify(data.addOrRemoveFromQueue));
     },
   });
-  const [deleteSong, { error }] = useMutation(DELETE_SONG);
+  const [deleteSong] = useMutation(DELETE_SONG);
   const { state, dispatch } = React.useContext(SongContext);
   const [currentSongPlaying, setCurrentSongPlaying] = React.useState(false);
   const { title, artist, thumbnail } = song;
@@ -101,7 +101,10 @@ function Song({ song }) {
   async function handleDeleteSong() {
     try {
       await deleteSong({
-        variables: { id },
+        variables: { id: song.id },
+      });
+      await addOrRemoveFromQueue({
+        variables: { input: { ...song, __typename: "Song" } },
       });
     } catch (error) {
       console.log("Error deleting song", error);
